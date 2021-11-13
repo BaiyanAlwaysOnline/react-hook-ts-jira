@@ -1,24 +1,15 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useEffect, useState} from 'react';
+import {useDebounce} from "utils/hooks";
 
 function App() {
+  const [value, setValue] = useState('');
+  const debounceValue = useDebounce<string>(value, 200);
+  useEffect(() => {
+      console.log('submit', debounceValue)
+  }, [debounceValue])
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <input type="text" value={value} onChange={(e) => setValue(e.target.value)} />
     </div>
   );
 }
