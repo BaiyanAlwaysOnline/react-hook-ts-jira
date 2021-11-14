@@ -1,15 +1,9 @@
-import React, {useEffect, useState} from 'react';
-import {useDebounce} from "utils/hooks";
+import Login from "./screen/login";
 
 function App() {
-  const [value, setValue] = useState('');
-  const debounceValue = useDebounce<string>(value, 200);
-  useEffect(() => {
-      console.log('submit', debounceValue)
-  }, [debounceValue])
   return (
     <div className="App">
-      <input type="text" value={value} onChange={(e) => setValue(e.target.value)} />
+      <Login />
     </div>
   );
 }
