@@ -1,7 +1,12 @@
 import { useAuth } from "./context/auth";
+import { useHttp, useMount } from "./utils/hooks";
 
 const AuthenticatedApp = () => {
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
+  const http = useHttp();
+  useMount(() => {
+    http("projects", { token: user?.token });
+  });
   return (
     <div>
       this is Authenticated page <br />{" "}

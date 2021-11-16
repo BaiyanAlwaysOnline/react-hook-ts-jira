@@ -1,11 +1,25 @@
 import React, { ReactNode, useContext, useState } from "react";
 import * as auth from "auth-provider";
 import { User } from "../types/user";
+import { getToken } from "auth-provider";
+import request from "../utils/request";
+import { useMount } from "../utils/hooks";
 
 interface FormData {
   username: string;
   password: string;
 }
+
+// 初始化启动User
+const bootstrapUser = async () => {
+  let user;
+  let token = getToken();
+  if (token) {
+    const data = await request("me", { token });
+    user = data.user;
+  }
+  return user;
+};
 
 const AuthContext = React.createContext<
   | undefined
@@ -25,6 +39,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const register = (formData: FormData) =>
     auth.register(formData).then(setUser);
   const logout = () => auth.logout();
+
+  useMount(async () => {
+    setUser(await bootstrapUser());
+  });
+
   return (
     <AuthContext.Provider
       value={{ user, login, register, logout }}
