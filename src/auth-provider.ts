@@ -1,6 +1,7 @@
 // 在真实环境中，如果使用firebase这种第三方auth服务的话，本文件不需要开发者开发
 
 import { User } from "types/user";
+import { message } from "antd";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -21,10 +22,13 @@ export const login = (data: { username: string; password: string }) => {
     },
     body: JSON.stringify(data),
   }).then(async (response) => {
+    let res = await response.json();
     if (response.ok) {
-      return handleUserResponse(await response.json());
+      message.success("登录成功");
+      return handleUserResponse(res);
     } else {
-      return Promise.reject(await response.json());
+      message.error(res.message);
+      return Promise.reject(res);
     }
   });
 };
@@ -37,10 +41,13 @@ export const register = (data: { username: string; password: string }) => {
     },
     body: JSON.stringify(data),
   }).then(async (response) => {
+    let res = await response.json();
     if (response.ok) {
-      return handleUserResponse(await response.json());
+      message.success("注册成功");
+      return handleUserResponse(res);
     } else {
-      return Promise.reject(await response.json());
+      message.error(res.message);
+      return Promise.reject(res);
     }
   });
 };
