@@ -1,19 +1,15 @@
 import { useAuth } from "./context/auth";
-import { useHttp, useMount } from "./utils/hooks";
 import { Button, Dropdown, Menu } from "antd";
 import styled from "@emotion/styled";
 import { Row } from "./components/libs";
 import { ReactComponent as SoftWareLogo } from "./assets/software-logo.svg";
+import ProjectListIndex from "./screen/project-list";
 
 const AuthenticatedApp = () => {
-  // const http = useHttp();
-  // useMount(() => {
-  //   http("projects", { token: user?.token });
-  // });
   return (
     <Container>
       <PageHeader />
-      <Main>main</Main>
+      <ProjectListIndex />
     </Container>
   );
 };
