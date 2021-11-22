@@ -27,7 +27,6 @@ export const login = (data: { username: string; password: string }) => {
       message.success("登录成功");
       return handleUserResponse(res);
     } else {
-      message.error(res.message);
       return Promise.reject(res);
     }
   });
@@ -46,7 +45,6 @@ export const register = (data: { username: string; password: string }) => {
       message.success("注册成功");
       return handleUserResponse(res);
     } else {
-      message.error(res.message);
       return Promise.reject(res);
     }
   });

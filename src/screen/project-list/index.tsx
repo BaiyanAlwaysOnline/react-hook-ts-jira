@@ -1,40 +1,38 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Search from "./search";
 import List from "./list";
 import styled from "@emotion/styled";
-import { useDebounce, useHttp, useMount } from "utils/hooks";
-import { User } from "types/user";
-import { Project } from "types/projects";
+import { useDebounce } from "utils/hooks";
+import { Typography } from "antd";
+import { useProjects } from "../../utils/useProjects";
+import { useUsers } from "../../utils/useUsers";
 
 const ProjectListIndex = () => {
   const [param, setParam] = useState({
     name: "",
     personId: "",
   });
-  const [listData, setListData] = useState<Project[] | []>([]);
-  const [userData, setUserData] = useState<User[] | []>([]);
-  const debouncedValue = useDebounce(param, 200);
-  const request = useHttp();
-  useMount(() => {
-    request("users").then(setUserData);
-  });
-  useEffect(() => {
-    request("projects", { data: param }).then(setListData);
-  }, [debouncedValue]);
+  const debouncedParams = useDebounce(param, 200);
+  const { data: userData } = useUsers();
+  const { data: listData, error, isLoading } = useProjects(debouncedParams);
 
   return (
     <Container>
       <h1>项目列表</h1>
-      <Search param={param} setParam={setParam} users={userData} />
-      <List dataSource={listData} users={userData} />
+      <Search param={param} setParam={setParam} users={userData || []} />
+      {error ? (
+        <Typography.Text type={"danger"}>{error?.message}</Typography.Text>
+      ) : null}
+      <List
+        dataSource={listData || []}
+        loading={isLoading}
+        users={userData || []}
+      />
     </Container>
   );
 };
 
 const Container = styled.div`
-  //width: 100%;
-  //height: 100%;
-  //background-color: #e1dede;
   padding: 3.2rem;
 `;
 
