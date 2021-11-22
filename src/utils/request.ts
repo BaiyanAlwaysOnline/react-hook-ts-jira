@@ -4,6 +4,7 @@
 import { apiUrl } from "../constant/http";
 import * as auth from "../auth-provider";
 import qs from "qs";
+import { message } from "antd";
 
 interface HTTPConfig extends RequestInit {
   token?: string;
@@ -43,6 +44,8 @@ const request = (
       // axios 和 fetch 的表现不一样，axios可以直接在返回状态不为2xx的时候抛出异常
       return Promise.reject(data);
     }
+  }).catch(error => {
+    message.error('接口异常，请检查请求参数或者待会再试！' + error)
   });
 };
 
