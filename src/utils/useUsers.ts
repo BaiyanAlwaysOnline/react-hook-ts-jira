@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { User } from "types/user";
-import { useHttp } from "./hooks";
+import { useHttp } from "./useHttp";
 import { useAsync } from "./useAsync";
 
 export const useUsers = (param?: Partial<User>) => {

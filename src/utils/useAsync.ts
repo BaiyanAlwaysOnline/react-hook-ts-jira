@@ -20,7 +20,7 @@ export const useAsync = <D>(
   customState?: State<D>,
   customConfig?: typeof defaultConfig
 ) => {
-  const config = { ...defaultConfig, customConfig };
+  const config = { ...defaultConfig, ...customConfig };
   const [state, setState] = useState<State<D>>({
     ...defaultState,
     ...customState,
@@ -42,16 +42,16 @@ export const useAsync = <D>(
     if (config.throwOnError) return Promise.reject(error);
     return error;
   };
-  const run = (params: Promise<D>) => {
+  const run = (runPromise: Promise<D>) => {
     // 参数为空，或者不是一个Promise
-    if (!params || !params.then) {
+    if (!runPromise || !runPromise.then) {
       throw new Error("参数必须是一个 Promise");
     }
     setState({
       ...state,
       stat: "loading",
     });
-    return params.then(setData, setError);
+    return runPromise.then(setData, setError);
   };
   return {
     isIdle: state.stat === "idle",

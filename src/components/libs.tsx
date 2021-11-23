@@ -1,4 +1,6 @@
 import styled from "@emotion/styled";
+import { Spin } from "antd";
+import { SpinProps } from "antd/es/Spin";
 
 // 通用Row组件，元素里面的内容竖直居中，可自定义margin
 export const Row = styled.div<{
@@ -21,3 +23,18 @@ export const Row = styled.div<{
         : undefined};
   }
 `;
+
+export const LoadingPageWrapper = styled.div`
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+`;
+
+export const LoadingPage = (props: SpinProps) => (
+  <LoadingPageWrapper>
+    <Spin {...props} />
+  </LoadingPageWrapper>
+);

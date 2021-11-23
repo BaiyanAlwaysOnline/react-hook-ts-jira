@@ -1,17 +1,24 @@
 import { useAuth } from "context/auth";
 import { Form, Input } from "antd";
 import { LongButton } from "./index";
+import { useAsync } from "utils/useAsync";
 
-const Login = () => {
+const Login = ({ onError }: { onError: (error: Error) => void }) => {
   const { login } = useAuth();
-  const onSubmit = ({
+  const { isLoading, run } = useAsync(undefined, { throwOnError: true });
+  const onSubmit = async ({
     username,
     password,
   }: {
     username: string;
     password: string;
   }) => {
-    login({ username, password });
+    try {
+      // ? 登录成功后，登录页销毁，然后才设置loading 故导致React控制台报错
+      await run(login({ username, password }));
+    } catch (error) {
+      onError(error as Error);
+    }
   };
   return (
     <Form onFinish={onSubmit}>
@@ -27,7 +34,7 @@ const Login = () => {
       >
         <Input placeholder={"密码"} />
       </Form.Item>
-      <LongButton htmlType={"submit"} type={"primary"}>
+      <LongButton loading={isLoading} htmlType={"submit"} type={"primary"}>
         登录
       </LongButton>
     </Form>

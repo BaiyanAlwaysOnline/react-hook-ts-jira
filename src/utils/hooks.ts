@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-import { useAuth } from "context/auth";
-import request from "./request";
 
 export const useDebounce = <T>(value: T, delay: number) => {
   const [debouncedValue, setDebouncedValue] = useState(value);
@@ -32,11 +30,4 @@ export const useMount = (callback: () => void) => {
     callback();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-};
-
-export const useHttp = () => {
-  const { user } = useAuth();
-  // 两个函数的参数类型是一样的，通过 Parameters<typeof http> 直接将类型映射到另一个函数
-  return (...[endPoint, config]: Parameters<typeof request>) =>
-    request(endPoint, { ...config, token: user?.token });
 };

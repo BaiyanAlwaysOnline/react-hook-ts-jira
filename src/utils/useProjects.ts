@@ -1,6 +1,6 @@
 import { useAsync } from "./useAsync";
 import { Project } from "types/projects";
-import { useHttp } from "./hooks";
+import { useHttp } from "./useHttp";
 import { useEffect } from "react";
 
 export const useProjects = (param?: { name: string; personId: string }) => {
