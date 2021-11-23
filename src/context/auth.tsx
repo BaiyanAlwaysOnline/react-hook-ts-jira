@@ -5,7 +5,7 @@ import { getToken } from "auth-provider";
 import request from "utils/request";
 import { useMount } from "utils/hooks";
 import { useAsync } from "utils/useAsync";
-import { LoadingPage } from "components/libs";
+import { FullLoadingPage } from "components/libs";
 import { message } from "antd";
 
 interface FormData {
@@ -28,8 +28,8 @@ const AuthContext = React.createContext<
   | undefined
   | {
       user: User | null;
-      login: (data: FormData) => Promise<User>;
-      register: (data: FormData) => Promise<User>;
+      login: (data: FormData) => Promise<void>;
+      register: (data: FormData) => Promise<void>;
       logout: () => Promise<void>;
     }
 >(undefined);
@@ -37,18 +37,34 @@ const AuthContext = React.createContext<
 AuthContext.displayName = "AuthContext"; // 提供给devTool使用
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const { run, data: user, error, isLoading, isIdle, setData: setUser } = useAsync<User>();
-  const login = (formData: FormData) => auth.login(formData).then(setUser);
-  const register = (formData: FormData) =>
-    auth.register(formData).then(setUser);
-  const logout = () => auth.logout();
+  const {
+    run,
+    data: user,
+    error,
+    isLoading,
+    isIdle,
+    setData: setUser,
+  } = useAsync<User | null>();
+  const login = async (formData: FormData) => {
+    const res = await auth.login(formData);
+    setUser(res);
+  };
+  const register = async (formData: FormData) => {
+    const res = await auth.register(formData);
+    setUser(res);
+  };
+
+  const logout = () =>
+    auth.logout().then(() => {
+      setUser(null);
+    });
 
   useMount(() => {
     run(bootstrapUser());
   });
 
-  if (error) message.error('接口异常，请稍后再试！')
-  if (isIdle || isLoading) return <LoadingPage tip={"正在努力加载中..."} />
+  if (error) message.error("接口异常，请稍后再试！");
+  if (isIdle || isLoading) return <FullLoadingPage tip={"正在努力加载中..."} />;
 
   return (
     <AuthContext.Provider

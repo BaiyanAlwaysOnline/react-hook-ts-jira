@@ -24,7 +24,7 @@ export const Row = styled.div<{
   }
 `;
 
-export const LoadingPageWrapper = styled.div`
+export const FullLoadingPageWrapper = styled.div`
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -33,8 +33,8 @@ export const LoadingPageWrapper = styled.div`
   z-index: 10;
 `;
 
-export const LoadingPage = (props: SpinProps) => (
-  <LoadingPageWrapper>
+export const FullLoadingPage = (props: SpinProps) => (
+  <FullLoadingPageWrapper>
     <Spin {...props} />
-  </LoadingPageWrapper>
+  </FullLoadingPageWrapper>
 );
