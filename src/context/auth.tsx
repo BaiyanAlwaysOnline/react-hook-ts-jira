@@ -1,9 +1,9 @@
 import React, { ReactNode, useContext, useState } from "react";
 import * as auth from "auth-provider";
-import { User } from "../types/user";
+import { User } from "types/user";
 import { getToken } from "auth-provider";
-import request from "../utils/request";
-import { useMount } from "../utils/hooks";
+import request from "utils/request";
+import { useMount } from "utils/hooks";
 
 interface FormData {
   username: string;

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { User } from "../types/user";
+import { User } from "types/user";
 import { useHttp } from "./hooks";
 import { useAsync } from "./useAsync";
 

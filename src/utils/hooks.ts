@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useAuth } from "../context/auth";
+import { useAuth } from "context/auth";
 import request from "./request";
 
 export const useDebounce = <T>(value: T, delay: number) => {

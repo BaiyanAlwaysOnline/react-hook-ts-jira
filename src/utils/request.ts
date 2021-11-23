@@ -1,8 +1,8 @@
 /**
  * @file 基于fetch封装通用请求方法
  */
-import { apiUrl } from "../constant/http";
-import * as auth from "../auth-provider";
+import { apiUrl } from "constant/http";
+import * as auth from "auth-provider";
 import qs from "qs";
 
 interface HTTPConfig extends RequestInit {

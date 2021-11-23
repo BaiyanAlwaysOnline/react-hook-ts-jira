@@ -4,8 +4,8 @@ import List from "./list";
 import styled from "@emotion/styled";
 import { useDebounce } from "utils/hooks";
 import { Typography } from "antd";
-import { useProjects } from "../../utils/useProjects";
-import { useUsers } from "../../utils/useUsers";
+import { useProjects } from "utils/useProjects";
+import { useUsers } from "utils/useUsers";
 
 const ProjectListIndex = () => {
   const [param, setParam] = useState({

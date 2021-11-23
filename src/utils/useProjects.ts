@@ -1,5 +1,5 @@
 import { useAsync } from "./useAsync";
-import { Project } from "../types/projects";
+import { Project } from "types/projects";
 import { useHttp } from "./hooks";
 import { useEffect } from "react";
 
