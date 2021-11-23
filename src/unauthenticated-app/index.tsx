@@ -16,8 +16,16 @@ const UnAuthenticatedApp = () => {
       <Header />
       <ShadowCard>
         <Title>{!isLogin ? "请注册" : "请登录"}</Title>
-        {error ? <Typography.Text type={"danger"}>{error.message}</Typography.Text> : null}
-        <div>{isLogin ? <Login onError={setError} /> : <Register onError={setError} />}</div>
+        {error ? (
+          <Typography.Text type={"danger"}>{error.message}</Typography.Text>
+        ) : null}
+        <div>
+          {isLogin ? (
+            <Login onError={setError} />
+          ) : (
+            <Register onError={setError} />
+          )}
+        </div>
         <Divider />
         <Button type={"link"} onClick={() => setIsLogin(!isLogin)}>
           {!isLogin ? "已经有账号了？直接登录" : "没有账号？注册新账号"}
