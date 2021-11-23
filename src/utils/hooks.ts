@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export const useDebounce = <T>(value: T, delay: number) => {
   const [debouncedValue, setDebouncedValue] = useState(value);
@@ -30,4 +30,19 @@ export const useMount = (callback: () => void) => {
     callback();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+};
+
+export const useDocumentTitle = (title: string, keepOnUnmount = true) => {
+  const oldTitle = useRef(document.title).current;
+
+  useEffect(() => {
+    document.title = title;
+  }, [title]);
+
+  // 当我的页面卸载时，用回之前的title
+  useEffect(() => {
+    return () => {
+      if (keepOnUnmount) document.title = oldTitle;
+    };
+  }, [oldTitle, keepOnUnmount]);
 };

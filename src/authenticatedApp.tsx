@@ -36,13 +36,7 @@ const User = () => {
       overlay={
         <Menu>
           <Menu.Item key={"logout"}>
-            <Button
-              onClick={() => {
-                logout();
-                window.location.reload();
-              }}
-              type={"link"}
-            >
+            <Button onClick={() => logout()} type={"link"}>
               登出
             </Button>
           </Menu.Item>

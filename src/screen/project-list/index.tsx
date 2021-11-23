@@ -2,7 +2,7 @@ import { useState } from "react";
 import Search from "./search";
 import List from "./list";
 import styled from "@emotion/styled";
-import { useDebounce } from "utils/hooks";
+import { useDebounce, useDocumentTitle } from "utils/hooks";
 import { Typography } from "antd";
 import { useProjects } from "utils/useProjects";
 import { useUsers } from "utils/useUsers";
@@ -15,7 +15,7 @@ const ProjectListIndex = () => {
   const debouncedParams = useDebounce(param, 200);
   const { data: userData } = useUsers();
   const { data: listData, error, isLoading } = useProjects(debouncedParams);
-
+  useDocumentTitle("项目列表管理");
   return (
     <Container>
       <h1>项目列表</h1>
