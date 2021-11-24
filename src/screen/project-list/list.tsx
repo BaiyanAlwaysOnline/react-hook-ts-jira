@@ -3,6 +3,7 @@ import { User } from "types/user";
 import dayjs from "dayjs";
 import { TableProps } from "antd/es/table";
 import { Table } from "antd";
+import { Link } from "react-router-dom";
 
 interface ListProps extends TableProps<Project> {
   users: User[];
@@ -16,13 +17,18 @@ export const List = ({ users, ...props }: ListProps) => {
       columns={[
         {
           title: "名称",
-          dataIndex: "organization",
+          align: "center",
+          render(value, project) {
+            return <Link to={String(project.id)}>{project.name}</Link>;
+          },
         },
         {
+          align: "center",
           title: "部门",
           dataIndex: "name",
         },
         {
+          align: "center",
           title: "负责人",
           render(value, project) {
             return (
@@ -34,6 +40,7 @@ export const List = ({ users, ...props }: ListProps) => {
           },
         },
         {
+          align: "center",
           title: "创建时间",
           render(value, project) {
             return (
