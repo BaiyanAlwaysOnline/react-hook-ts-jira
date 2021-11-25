@@ -24,6 +24,7 @@ const AuthenticatedApp = () => {
               path={"/projects/:projectId/*"}
               element={<ProjectScreen />}
             />
+            <Route index element={<Navigate to="/projects" />} />
           </Routes>
         </Router>
       </Main>
