@@ -8,6 +8,7 @@ export const useProjects = (param?: { name: string; personId: string }) => {
   const request = useHttp();
   useEffect(() => {
     run(request("projects", { data: param || {} }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [param]);
   return result;
 };

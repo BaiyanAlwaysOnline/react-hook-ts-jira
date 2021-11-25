@@ -2586,6 +2586,13 @@
     "@webassemblyjs/wast-parser" "1.9.0"
     "@xtuc/long" "4.2.2"
 
+"@welldone-software/why-did-you-render@^6.2.3":
+  version "6.2.3"
+  resolved "https://registry.npmmirror.com/@welldone-software/why-did-you-render/download/@welldone-software/why-did-you-render-6.2.3.tgz#cdd5e27cf25b7e767c1c0b0e8808f67d3f6be833"
+  integrity sha512-FQgi90jvC9uw2aALlonJfqaWOvU5UUBBVvdAnS2iryXwCc4YJkKsPJY5Y/LzaND3OIyk8XGUn1vTRn6hcem28Q==
+  dependencies:
+    lodash "^4"
+
 "@xtuc/ieee754@^1.2.0":
   version "1.2.0"
   resolved "https://registry.npm.taobao.org/@xtuc/ieee754/download/@xtuc/ieee754-1.2.0.tgz#eef014a3145ae477a1cbc00cd1e552336dceb790"
@@ -7062,7 +7069,7 @@ hex-color-regex@^1.1.0:
   resolved "https://registry.npm.taobao.org/hex-color-regex/download/hex-color-regex-1.1.0.tgz#4c06fccb4602fe2602b3c93df82d7e7dbf1a8a8e"
   integrity sha1-TAb8y0YC/iYCs8k9+C1+fb8aio4=
 
-history@^5.1.0:
+history@5, history@^5.1.0:
   version "5.1.0"
   resolved "https://registry.npmmirror.com/history/download/history-5.1.0.tgz#2e93c09c064194d38d52ed62afd0afc9d9b01ece"
   integrity sha1-LpPAnAZBlNONUu1ir9CvydmwHs4=
@@ -9140,7 +9147,7 @@ lodash.without@~4.4.0:
   resolved "https://registry.nlark.com/lodash.without/download/lodash.without-4.4.0.tgz#3cd4574a00b67bae373a94b748772640507b7aac"
   integrity sha1-PNRXSgC2e643OpS3SHcmQFB7eqw=
 
-lodash@4, "lodash@>=3.5 <5", lodash@^4.17.11, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.19, lodash@^4.17.20, lodash@^4.17.21, lodash@^4.17.5, lodash@^4.7.0:
+lodash@4, "lodash@>=3.5 <5", lodash@^4, lodash@^4.17.11, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.19, lodash@^4.17.20, lodash@^4.17.21, lodash@^4.17.5, lodash@^4.7.0:
   version "4.17.21"
   resolved "https://registry.nlark.com/lodash/download/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
   integrity sha1-Z5WRxWTDv/quhFTPCz3zcMPWkRw=

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Search from "./search";
 import List from "./list";
 import styled from "@emotion/styled";
@@ -6,15 +5,17 @@ import { useDebounce, useDocumentTitle } from "utils/hooks";
 import { Typography } from "antd";
 import { useProjects } from "utils/useProjects";
 import { useUsers } from "utils/useUsers";
+import { useUrlQuery } from "../../utils/useUrlQuery";
 
 const ProjectListIndex = () => {
-  const [param, setParam] = useState({
-    name: "",
-    personId: "",
-  });
+  // params
+  const [param, setParam] = useUrlQuery(["name", "personId"]);
   const debouncedParams = useDebounce(param, 200);
+  //userData
   const { data: userData } = useUsers();
+  //listData
   const { data: listData, error, isLoading } = useProjects(debouncedParams);
+  //document title
   useDocumentTitle("项目列表管理");
   return (
     <Container>
