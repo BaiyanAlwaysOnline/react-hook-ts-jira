@@ -5,22 +5,25 @@ import { useDebounce, useDocumentTitle } from "utils/hooks";
 import { Typography } from "antd";
 import { useProjects } from "utils/useProjects";
 import { useUsers } from "utils/useUsers";
-import { useUrlQueryParams } from "utils/useUrlQueryParams";
+import { useProjectSearchParams } from "./utils";
 
 const ProjectListIndex = () => {
-  // params
-  const [param, setParam] = useUrlQueryParams(["name", "personId"]);
-  const debouncedParams = useDebounce(param, 200);
+  //document title
+  useDocumentTitle("项目列表管理");
   //userData
   const { data: userData } = useUsers();
   //listData
-  const { data: listData, error, isLoading } = useProjects(debouncedParams);
-  //document title
-  useDocumentTitle("项目列表管理");
+  const [param, setParam] = useProjectSearchParams();
+  const {
+    data: listData,
+    error,
+    isLoading,
+  } = useProjects(useDebounce(param, 200));
+
   return (
     <Container>
       <h1>项目列表</h1>
-      <Search param={param} setParam={setParam} users={userData || []} />
+      <Search param={param} setParam={setParam} />
       {error ? (
         <Typography.Text type={"danger"}>{error?.message}</Typography.Text>
       ) : null}

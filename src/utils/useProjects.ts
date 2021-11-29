@@ -3,7 +3,7 @@ import { Project } from "types/projects";
 import { useHttp } from "./useHttp";
 import { useEffect } from "react";
 
-export const useProjects = (param?: { name: string; personId: string }) => {
+export const useProjects = (param?: Partial<Project>) => {
   const { run, ...result } = useAsync<Project[]>();
   const request = useHttp();
   useEffect(() => {

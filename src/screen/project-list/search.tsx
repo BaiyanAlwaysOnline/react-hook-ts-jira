@@ -1,16 +1,14 @@
 import React from "react";
 import { Form, Input } from "antd";
-import { User } from "types/user";
-import { IdSelect } from "components/id-select";
 import { Project } from "types/projects";
+import { UserSelect } from "../../components/user-select";
 
 interface SearchPanelProps {
-  users: User[];
   param: Partial<Pick<Project, "personId" | "name">>;
   setParam: (param: SearchPanelProps["param"]) => void;
 }
 
-export const SearchPanel = ({ users, param, setParam }: SearchPanelProps) => {
+export const SearchPanel = ({ param, setParam }: SearchPanelProps) => {
   return (
     <Form style={{ marginBottom: "2rem" }} layout={"inline"}>
       <Form.Item>
@@ -27,10 +25,8 @@ export const SearchPanel = ({ users, param, setParam }: SearchPanelProps) => {
         />
       </Form.Item>
       <Form.Item>
-        <IdSelect
+        <UserSelect
           value={param.personId}
-          defaultOptionName={"项目负责人"}
-          options={users}
           onChange={(personId) => setParam({ ...param, personId })}
         />
       </Form.Item>
