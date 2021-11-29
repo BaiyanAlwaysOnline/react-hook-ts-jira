@@ -5,11 +5,11 @@ import { useDebounce, useDocumentTitle } from "utils/hooks";
 import { Typography } from "antd";
 import { useProjects } from "utils/useProjects";
 import { useUsers } from "utils/useUsers";
-import { useUrlQuery } from "../../utils/useUrlQuery";
+import { useUrlQueryParams } from "utils/useUrlQueryParams";
 
 const ProjectListIndex = () => {
   // params
-  const [param, setParam] = useUrlQuery(["name", "personId"]);
+  const [param, setParam] = useUrlQueryParams(["name", "personId"]);
   const debouncedParams = useDebounce(param, 200);
   //userData
   const { data: userData } = useUsers();
