@@ -4,17 +4,34 @@ import dayjs from "dayjs";
 import { TableProps } from "antd/es/table";
 import { Table } from "antd";
 import { Link } from "react-router-dom";
+import { Pin } from "../../components/pin";
+import { useEditProject } from "../../utils/useProjects";
 
 interface ListProps extends TableProps<Project> {
   users: User[];
 }
 
 export const List = ({ users, ...props }: ListProps) => {
+  const { mutate } = useEditProject();
+  // id和pin不是同一时刻传递的，可以使用函数式编程的思想
+  const pinProject = (id: number) => (pin: boolean) => mutate(id, { pin });
   return (
     <Table
       rowKey={"id"}
       pagination={false}
       columns={[
+        {
+          title: <Pin checked={true} />,
+          align: "center",
+          render(value, project) {
+            return (
+              <Pin
+                checked={project.pin}
+                onCheckedChange={pinProject(project.id)}
+              />
+            );
+          },
+        },
         {
           title: "名称",
           align: "center",
