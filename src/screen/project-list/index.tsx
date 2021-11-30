@@ -18,6 +18,7 @@ const ProjectListIndex = () => {
     data: listData,
     error,
     isLoading,
+    retry,
   } = useProjects(useDebounce(param, 200));
 
   return (
@@ -31,6 +32,7 @@ const ProjectListIndex = () => {
         dataSource={listData || []}
         loading={isLoading}
         users={userData || []}
+        retry={retry}
       />
     </Container>
   );

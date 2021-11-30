@@ -6,8 +6,9 @@ import { useEffect } from "react";
 export const useProjects = (param?: Partial<Project>) => {
   const { run, ...result } = useAsync<Project[]>();
   const request = useHttp();
+  const queryProject = () => request("projects", { data: param || {} });
   useEffect(() => {
-    run(request("projects", { data: param || {} }));
+    run(queryProject(), { retry: queryProject });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [param]);
   return result;

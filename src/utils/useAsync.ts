@@ -25,6 +25,7 @@ export const useAsync = <D>(
     ...defaultState,
     ...customState,
   });
+  const [retry, setRetry] = useState(() => () => {});
   const setData = (data: D) => {
     setState({
       data,
@@ -42,10 +43,16 @@ export const useAsync = <D>(
     if (config.throwOnError) return Promise.reject(error);
     return error;
   };
-  const run = (runPromise: Promise<D>) => {
+  const run = (
+    runPromise: Promise<D>,
+    runConfig?: { retry: () => Promise<D> }
+  ) => {
     // 参数为空，或者不是一个Promise
     if (!runPromise || !runPromise.then) {
       throw new Error("参数必须是一个 Promise");
+    }
+    if (runConfig) {
+      setRetry(() => () => run(runConfig.retry?.()));
     }
     setState({
       ...state,
@@ -61,6 +68,8 @@ export const useAsync = <D>(
     run,
     setData,
     setError,
+    // 重新run，然后刷新state，触发UI重新渲染
+    retry,
     data: state.data,
     error: state.error,
   };
