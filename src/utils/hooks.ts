@@ -32,6 +32,20 @@ export const useMount = (callback: () => void) => {
   }, []);
 };
 
+/**
+ * @description 当组件卸载或者未加载时，返回false
+ */
+export const useMountRef = () => {
+  const mountedRef = useRef(false);
+  useEffect(() => {
+    mountedRef.current = true;
+    return () => {
+      mountedRef.current = false;
+    };
+  }, []);
+  return mountedRef;
+};
+
 export const useDocumentTitle = (title: string, keepOnUnmount = true) => {
   const oldTitle = useRef(document.title).current;
 

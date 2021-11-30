@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useMountRef } from "./hooks";
 
 interface State<D> {
   data: D | null;
@@ -26,7 +27,10 @@ export const useAsync = <D>(
     ...customState,
   });
   const [retry, setRetry] = useState(() => () => {});
+  const isMounted = useMountRef();
   const setData = (data: D) => {
+    // 当前使用useAsync的组件如果已经卸载，不在执行setState的操作
+    if (!isMounted.current) return;
     setState({
       data,
       error: null,
@@ -35,6 +39,8 @@ export const useAsync = <D>(
     return data;
   };
   const setError = (error: Error) => {
+    // 当前使用useAsync的组件如果已经卸载，不在执行setState的操作
+    if (!isMounted.current) return;
     setState({
       data: null,
       error,
