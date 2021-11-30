@@ -8,7 +8,7 @@ export const useUsers = (param?: Partial<User>) => {
   const { run, ...result } = useAsync<User[]>();
   useEffect(() => {
     run(request("users", { data: param || {} }));
-  }, [param]);
+  }, [run, param, request]);
   return {
     ...result,
   };
