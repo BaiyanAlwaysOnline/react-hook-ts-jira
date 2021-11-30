@@ -9,7 +9,7 @@ import { useEditProject } from "../../utils/useProjects";
 
 interface ListProps extends TableProps<Project> {
   users: User[];
-  retry?: () => void;
+  retry: () => void;
 }
 
 export const List = ({ users, retry, ...props }: ListProps) => {

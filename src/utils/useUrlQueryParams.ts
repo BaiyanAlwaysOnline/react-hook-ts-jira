@@ -1,5 +1,6 @@
 import { URLSearchParamsInit, useSearchParams } from "react-router-dom";
 import { useMemo } from "react";
+import { cleanObject } from "./utils";
 
 // 根据参数数组获取到url query上对应的参数
 export const useUrlQueryParams = <K extends string>(keys: K[]) => {
@@ -18,10 +19,11 @@ export const useUrlQueryParams = <K extends string>(keys: K[]) => {
       [searchParams]
     ),
     (params: Partial<{ [key in K]: unknown }>) => {
-      setSearchParams({
+      const o = cleanObject({
         ...Object.fromEntries(searchParams), // 和Object.entries作用相反
         ...params,
-      } as URLSearchParamsInit);
+      }) as URLSearchParamsInit;
+      setSearchParams(o);
     },
   ] as const;
 };
