@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 export const useDebounce = <T>(value: T, delay: number) => {
   const [debouncedValue, setDebouncedValue] = useState(value);
@@ -59,4 +59,14 @@ export const useDocumentTitle = (title: string, keepOnUnmount = true) => {
       if (keepOnUnmount) document.title = oldTitle;
     };
   }, [oldTitle, keepOnUnmount]);
+};
+
+export const useSafeDispatch = <T>(dispatch: (...args: T[]) => void) => {
+  const isMounted = useMountRef();
+  return useCallback(
+    (...args: T[]) => {
+      isMounted ? dispatch(...args) : void 0;
+    },
+    [isMounted, dispatch]
+  );
 };

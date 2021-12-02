@@ -1,10 +1,12 @@
-import { useCallback, useState } from "react";
-import { useMountRef } from "./hooks";
+import { useCallback, useReducer, useState } from "react";
+import { useSafeDispatch } from "./hooks";
+
+type Status = "idle" | "loading" | "error" | "success";
 
 interface State<D> {
   data: D | null;
   error: Error | null;
-  stat: "idle" | "loading" | "error" | "success";
+  stat: Status;
 }
 
 const defaultState: State<null> = {
@@ -22,30 +24,30 @@ export const useAsync = <D>(
   customConfig?: typeof defaultConfig
 ) => {
   const config = { ...defaultConfig, ...customConfig };
-  const [state, setState] = useState<State<D>>({
-    ...defaultState,
-    ...customState,
-  });
+  const [state, dispatch] = useReducer(
+    (state: State<D>, action: Partial<State<D>>) => ({ ...state, ...action }),
+    {
+      ...defaultState,
+      ...customState,
+    }
+  );
+  // 当前使用useAsync的组件如果已经卸载，不在执行setState的操作
+  const safeDispatch = useSafeDispatch(dispatch);
   const [retry, setRetry] = useState(() => () => {});
-  const isMounted = useMountRef();
   const setData = useCallback(
     (data: D) => {
-      // 当前使用useAsync的组件如果已经卸载，不在执行setState的操作
-      if (!isMounted.current) return;
-      setState({
+      safeDispatch({
         data,
         error: null,
         stat: "success",
       });
       return data;
     },
-    [setState, isMounted]
+    [safeDispatch]
   );
   const setError = useCallback(
     (error: Error) => {
-      // 当前使用useAsync的组件如果已经卸载，不在执行setState的操作
-      if (!isMounted.current) return;
-      setState({
+      safeDispatch({
         data: null,
         error,
         stat: "error",
@@ -53,7 +55,7 @@ export const useAsync = <D>(
       if (config.throwOnError) return Promise.reject(error);
       return error;
     },
-    [setState, isMounted, config.throwOnError]
+    [config.throwOnError, safeDispatch]
   );
   const run = useCallback(
     (runPromise: Promise<D>, runConfig?: { retry: () => Promise<D> }) => {
@@ -65,13 +67,12 @@ export const useAsync = <D>(
         setRetry(() => () => run(runConfig.retry?.()));
       }
       // ! 在useCallBack中使用setState，会导致无限循环，通过functional setState解决
-      setState((prevState) => ({
-        ...prevState,
+      safeDispatch({
         stat: "loading",
-      }));
+      });
       return runPromise.then(setData, setError);
     },
-    [setData, setError]
+    [setData, setError, safeDispatch]
   );
   return {
     isIdle: state.stat === "idle",
