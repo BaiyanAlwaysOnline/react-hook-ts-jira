@@ -8,6 +8,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { Route, Routes, Navigate } from "react-router";
 import ProjectScreen from "./screen/project";
 import { resetRoute } from "./utils/utils";
+import { ProjectPopover } from "./components/project-popover";
 
 // react-router和react-router-dom的关系就像
 // react和react-dom或者react-native的关系。前者时处理核心逻辑，后两个和不同宿主关系强关联，使用不同宿主环境的api，消费react算出的结果
@@ -42,7 +43,7 @@ const PageHeader = () => {
           cursor={"pointer"}
           color={"rgb(38, 132, 255)"}
         />
-        <h3>项目</h3>
+        <ProjectPopover />
         <h3>用户</h3>
       </HeaderLeft>
       <HeaderRight>

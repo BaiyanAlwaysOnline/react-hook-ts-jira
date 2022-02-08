@@ -2,7 +2,7 @@ import { Project } from "types/projects";
 import { User } from "types/user";
 import dayjs from "dayjs";
 import { TableProps } from "antd/es/table";
-import { Table } from "antd";
+import { Popover, Space, Table, Typography } from "antd";
 import { Link } from "react-router-dom";
 import { Pin } from "../../components/pin";
 import { useEditProject } from "../../utils/useProjects";
@@ -71,9 +71,31 @@ export const List = ({ users, retry, ...props }: ListProps) => {
             );
           },
         },
+        {
+          align: "center",
+          render(value, project) {
+            return <More />;
+          },
+        },
       ]}
       {...props}
     />
+  );
+};
+
+const More = () => {
+  return (
+    <Popover
+      content={
+        <Space direction={"vertical"}>
+          <Typography.Link>编辑</Typography.Link>
+          <Typography.Link>删除</Typography.Link>
+        </Space>
+      }
+      placement={"bottom"}
+    >
+      <Typography.Link>...</Typography.Link>
+    </Popover>
   );
 };
 

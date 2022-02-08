@@ -6,6 +6,8 @@ import { Typography } from "antd";
 import { useProjects } from "utils/useProjects";
 import { useUsers } from "utils/useUsers";
 import { useProjectSearchParams } from "./utils";
+import { Row } from "../../components/libs";
+import { ProjectModel } from "./project-model";
 
 const ProjectListIndex = () => {
   //document title
@@ -23,7 +25,10 @@ const ProjectListIndex = () => {
 
   return (
     <Container>
-      <h1>项目列表</h1>
+      <Row between marginBottom={3}>
+        <h1>项目列表</h1>
+        <Typography.Link>创建项目</Typography.Link>
+      </Row>
       <Search param={param} setParam={setParam} />
       {error ? (
         <Typography.Text type={"danger"}>{error?.message}</Typography.Text>
@@ -34,6 +39,7 @@ const ProjectListIndex = () => {
         users={userData || []}
         retry={retry}
       />
+      <ProjectModel />
     </Container>
   );
 };
