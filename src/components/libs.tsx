@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { Spin } from "antd";
+import { Spin, Typography } from "antd";
 import { SpinProps } from "antd/es/Spin";
 
 // 通用Row组件，元素里面的内容竖直居中，可自定义margin
@@ -38,3 +38,16 @@ export const FullLoadingPage = (props: SpinProps) => (
     <Spin {...props} />
   </FullLoadingPageWrapper>
 );
+
+// 类型守卫 + duck类型
+const isError = (value: any): value is Error => !!value?.message;
+/**
+ * @desc 接收任意类型，当是error类型时，返回ErrorComponent
+ * @param error
+ */
+export const ErrorBox = ({ error }: { error: unknown }) => {
+  if (isError(error)) {
+    return <Typography.Text type={"danger"}>{error?.message}</Typography.Text>;
+  }
+  return null;
+};

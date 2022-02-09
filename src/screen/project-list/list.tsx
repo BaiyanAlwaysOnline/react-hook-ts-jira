@@ -9,14 +9,12 @@ import { useEditProject } from "../../utils/useProjects";
 
 interface ListProps extends TableProps<Project> {
   users: User[];
-  retry: () => void;
 }
 
-export const List = ({ users, retry, ...props }: ListProps) => {
+export const List = ({ users, ...props }: ListProps) => {
   const { mutate } = useEditProject();
   // id和pin不是同一时刻传递的，可以使用函数式编程的思想
-  const pinProject = (id: number) => (pin: boolean) =>
-    mutate(id, { pin }).then(retry);
+  const pinProject = (id: number) => (pin: boolean) => mutate({ id, pin });
   return (
     <Table
       rowKey={"id"}

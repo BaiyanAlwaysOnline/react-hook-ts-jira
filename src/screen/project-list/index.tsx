@@ -6,7 +6,7 @@ import { Typography } from "antd";
 import { useProjects } from "utils/useProjects";
 import { useUsers } from "utils/useUsers";
 import { useProjectModal, useProjectSearchParams } from "./utils";
-import { Row } from "../../components/libs";
+import { ErrorBox, Row } from "../../components/libs";
 import { ProjectModel } from "./project-model";
 
 const ProjectListIndex = () => {
@@ -20,7 +20,6 @@ const ProjectListIndex = () => {
     data: listData,
     error,
     isLoading,
-    retry,
   } = useProjects(useDebounce(param, 200));
   const { open } = useProjectModal();
 
@@ -31,14 +30,11 @@ const ProjectListIndex = () => {
         <Typography.Link onClick={open}>创建项目</Typography.Link>
       </Row>
       <Search param={param} setParam={setParam} />
-      {error ? (
-        <Typography.Text type={"danger"}>{error?.message}</Typography.Text>
-      ) : null}
+      <ErrorBox error={error} />
       <List
         dataSource={listData || []}
         loading={isLoading}
         users={userData || []}
-        retry={retry}
       />
       <ProjectModel />
     </Container>

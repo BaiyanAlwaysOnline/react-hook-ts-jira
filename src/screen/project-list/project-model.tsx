@@ -3,10 +3,10 @@ import { Drawer, Form, Input } from "antd";
 import { useProjectModal } from "./utils";
 
 export const ProjectModel = () => {
-  const { close, projectModalEdit } = useProjectModal();
+  const { close, projectModalOpen } = useProjectModal();
 
   return (
-    <Drawer width={"50vw"} visible={projectModalEdit} onClose={close}>
+    <Drawer width={"50vw"} visible={projectModalOpen} onClose={close}>
       <ProjectModelContainer>
         <h1>创建项目</h1>
         <Form style={{ width: "40rem" }} layout={"vertical"}>

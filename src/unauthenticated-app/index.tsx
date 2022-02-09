@@ -1,11 +1,12 @@
 import { useState } from "react";
 import Login from "./login";
 import Register from "./register";
-import { Button, Card, Divider, Typography } from "antd";
+import { Button, Card, Divider } from "antd";
 import styled from "@emotion/styled";
 import logo from "assets/logo.svg";
 import left from "assets/left.svg";
 import right from "assets/right.svg";
+import { ErrorBox } from "../components/libs";
 
 const UnAuthenticatedApp = () => {
   const [isLogin, setIsLogin] = useState(false);
@@ -16,9 +17,7 @@ const UnAuthenticatedApp = () => {
       <Header />
       <ShadowCard>
         <Title>{!isLogin ? "请注册" : "请登录"}</Title>
-        {error ? (
-          <Typography.Text type={"danger"}>{error.message}</Typography.Text>
-        ) : null}
+        <ErrorBox error={error} />
         <div>
           {isLogin ? (
             <Login onError={setError} />

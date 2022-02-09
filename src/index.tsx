@@ -5,16 +5,16 @@ import reportWebVitals from "./reportWebVitals";
 import { DevTools, loadServer } from "jira-dev-tool";
 import "antd/dist/antd.less";
 import "./App.css";
-import { AuthProvider } from "./context/auth";
+import AppProvider from "./context";
 
 loadServer(() => {
   ReactDOM.render(
-    <AuthProvider>
-      <React.StrictMode>
-        <App />
+    <React.StrictMode>
+      <AppProvider>
         <DevTools />
-      </React.StrictMode>
-    </AuthProvider>,
+        <App />
+      </AppProvider>
+    </React.StrictMode>,
     document.getElementById("root")
   );
 });
