@@ -5,7 +5,7 @@ import { useDebounce, useDocumentTitle } from "utils/hooks";
 import { Typography } from "antd";
 import { useProjects } from "utils/useProjects";
 import { useUsers } from "utils/useUsers";
-import { useProjectSearchParams } from "./utils";
+import { useProjectModal, useProjectSearchParams } from "./utils";
 import { Row } from "../../components/libs";
 import { ProjectModel } from "./project-model";
 
@@ -22,12 +22,13 @@ const ProjectListIndex = () => {
     isLoading,
     retry,
   } = useProjects(useDebounce(param, 200));
+  const { open } = useProjectModal();
 
   return (
     <Container>
       <Row between marginBottom={3}>
         <h1>项目列表</h1>
-        <Typography.Link>创建项目</Typography.Link>
+        <Typography.Link onClick={open}>创建项目</Typography.Link>
       </Row>
       <Search param={param} setParam={setParam} />
       {error ? (

@@ -1,15 +1,12 @@
 import styled from "@emotion/styled";
 import { Drawer, Form, Input } from "antd";
-import { useState } from "react";
+import { useProjectModal } from "./utils";
 
 export const ProjectModel = () => {
-  const [visible, setVisible] = useState(true);
-
-  const close = () => setVisible(false);
-  const open = () => setVisible(true);
+  const { close, projectModalEdit } = useProjectModal();
 
   return (
-    <Drawer width={"50vw"} visible={visible} onClose={close}>
+    <Drawer width={"50vw"} visible={projectModalEdit} onClose={close}>
       <ProjectModelContainer>
         <h1>创建项目</h1>
         <Form style={{ width: "40rem" }} layout={"vertical"}>

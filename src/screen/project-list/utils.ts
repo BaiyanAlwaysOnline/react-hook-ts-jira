@@ -12,3 +12,19 @@ export const useProjectSearchParams = () => {
     setParam,
   ] as const;
 };
+
+// 使用url参数管理project-modal的显示和隐藏
+export const useProjectModal = () => {
+  const [{ projectModalEdit }, setProjectModalEdit] = useUrlQueryParams([
+    "projectModalEdit",
+  ]);
+
+  const close = () => setProjectModalEdit({ projectModalEdit: undefined });
+  const open = () => setProjectModalEdit({ projectModalEdit: true });
+
+  return {
+    close,
+    open,
+    projectModalEdit: projectModalEdit === "true",
+  };
+};
