@@ -4,7 +4,6 @@ import styled from "@emotion/styled";
 import { Row } from "./components/libs";
 import { ReactComponent as SoftWareLogo } from "./assets/software-logo.svg";
 import ProjectListScreen from "./screen/project-list";
-import { BrowserRouter as Router } from "react-router-dom";
 import { Route, Routes, Navigate } from "react-router";
 import ProjectScreen from "./screen/project";
 import { resetRoute } from "./utils/utils";
@@ -18,16 +17,11 @@ const AuthenticatedApp = () => {
     <Container>
       <PageHeader />
       <Main>
-        <Router>
-          <Routes>
-            <Route path={"/projects"} element={<ProjectListScreen />} />
-            <Route
-              path={"/projects/:projectId/*"}
-              element={<ProjectScreen />}
-            />
-            <Route index element={<Navigate to="/projects" />} />
-          </Routes>
-        </Router>
+        <Routes>
+          <Route path={"/projects"} element={<ProjectListScreen />} />
+          <Route path={"/projects/:projectId/*"} element={<ProjectScreen />} />
+          <Route index element={<Navigate to="/projects" />} />
+        </Routes>
       </Main>
     </Container>
   );

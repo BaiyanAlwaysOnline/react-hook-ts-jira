@@ -1,12 +1,16 @@
 import { QueryClientProvider, QueryClient } from "react-query";
 import { ReactNode } from "react";
 import { AuthProvider } from "./auth";
-
+import { BrowserRouter as Router } from "react-router-dom";
+import { ReactQueryDevtools } from "react-query/devtools";
+const client = new QueryClient();
 const AppProvider = ({ children }: { children: ReactNode }) => {
-  const client = new QueryClient();
   return (
     <QueryClientProvider client={client}>
-      <AuthProvider>{children}</AuthProvider>
+      <ReactQueryDevtools initialIsOpen={false} />
+      <Router>
+        <AuthProvider>{children}</AuthProvider>
+      </Router>
     </QueryClientProvider>
   );
 };
