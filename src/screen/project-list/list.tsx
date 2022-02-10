@@ -6,6 +6,7 @@ import { Popover, Space, Table, Typography } from "antd";
 import { Link } from "react-router-dom";
 import { Pin } from "../../components/pin";
 import { useEditProject } from "../../utils/useProjects";
+import { useProjectModal } from "./utils";
 
 interface ListProps extends TableProps<Project> {
   users: User[];
@@ -42,7 +43,7 @@ export const List = ({ users, ...props }: ListProps) => {
         {
           align: "center",
           title: "部门",
-          dataIndex: "name",
+          dataIndex: "organization",
         },
         {
           align: "center",
@@ -72,7 +73,7 @@ export const List = ({ users, ...props }: ListProps) => {
         {
           align: "center",
           render(value, project) {
-            return <More />;
+            return <More project={project} />;
           },
         },
       ]}
@@ -81,12 +82,16 @@ export const List = ({ users, ...props }: ListProps) => {
   );
 };
 
-const More = () => {
+const More = ({ project }: { project: Project }) => {
+  const { startEditProject } = useProjectModal();
+  const startEdit = (id: number) => startEditProject(id);
   return (
     <Popover
       content={
         <Space direction={"vertical"}>
-          <Typography.Link>编辑</Typography.Link>
+          <Typography.Link onClick={() => startEdit(project.id)}>
+            编辑
+          </Typography.Link>
           <Typography.Link>删除</Typography.Link>
         </Space>
       }

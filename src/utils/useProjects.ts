@@ -3,14 +3,16 @@ import { useHttp } from "./useHttp";
 import { cleanObject } from "./utils";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 
+// 查询项目列表
 export const useProjects = (param?: Partial<Project>) => {
   const request = useHttp();
   const queryProject = () =>
     request("projects", { data: cleanObject(param || {}) });
 
-  return useQuery(["projects", param], () => queryProject());
+  return useQuery<Project[]>(["projects", param], () => queryProject());
 };
 
+// 编辑项目
 export const useEditProject = () => {
   const request = useHttp();
   const queryClient = useQueryClient();
@@ -29,6 +31,7 @@ export const useEditProject = () => {
   );
 };
 
+// 新增项目
 export const useAddProject = () => {
   const request = useHttp();
   const queryClient = useQueryClient();
@@ -43,6 +46,18 @@ export const useAddProject = () => {
       onSuccess: () => {
         queryClient.invalidateQueries("projects");
       },
+    }
+  );
+};
+
+// 查询项目详情
+export const useProject = (projectId?: number) => {
+  const request = useHttp();
+  return useQuery<Project>(
+    ["project", projectId],
+    () => request(`projects/${projectId}`),
+    {
+      enabled: !!projectId,
     }
   );
 };
