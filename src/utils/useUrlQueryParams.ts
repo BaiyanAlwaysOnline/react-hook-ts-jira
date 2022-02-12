@@ -5,7 +5,8 @@ import { cleanObject } from "./utils";
 // 根据参数数组获取到url query上对应的参数
 export const useUrlQueryParams = <K extends string>(keys: K[]) => {
   // 浏览器api UrlSearchParams
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
+  const setSearchParams = useSetUrlParams();
   return [
     useMemo(
       () =>
@@ -19,13 +20,20 @@ export const useUrlQueryParams = <K extends string>(keys: K[]) => {
       [searchParams]
     ),
     (params: Partial<{ [key in K]: unknown }>) => {
-      const o = cleanObject({
-        ...Object.fromEntries(searchParams), // 和Object.entries作用相反
-        ...params,
-      }) as URLSearchParamsInit;
-      setSearchParams(o);
+      setSearchParams(params);
     },
   ] as const;
+};
+
+export const useSetUrlParams = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  return (params: Partial<{ [key in string]: unknown }>) => {
+    const o = cleanObject({
+      ...Object.fromEntries(searchParams), // 和Object.entries作用相反
+      ...params,
+    }) as URLSearchParamsInit;
+    setSearchParams(o);
+  };
 };
 
 // for of 只接受有iterator接口变量

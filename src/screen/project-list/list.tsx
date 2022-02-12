@@ -5,7 +5,11 @@ import { TableProps } from "antd/es/table";
 import { Popover, Space, Table, Typography } from "antd";
 import { Link } from "react-router-dom";
 import { Pin } from "../../components/pin";
-import { useEditProject } from "../../utils/useProjects";
+import {
+  useDeleteProject,
+  useEditProject,
+  useProjectQueryKey,
+} from "../../utils/useProjects";
 import { useProjectModal } from "./utils";
 
 interface ListProps extends TableProps<Project> {
@@ -13,7 +17,7 @@ interface ListProps extends TableProps<Project> {
 }
 
 export const List = ({ users, ...props }: ListProps) => {
-  const { mutate } = useEditProject();
+  const { mutate } = useEditProject(useProjectQueryKey());
   // id和pin不是同一时刻传递的，可以使用函数式编程的思想
   const pinProject = (id: number) => (pin: boolean) => mutate({ id, pin });
   return (
@@ -84,6 +88,7 @@ export const List = ({ users, ...props }: ListProps) => {
 
 const More = ({ project }: { project: Project }) => {
   const { startEditProject } = useProjectModal();
+  const { mutate } = useDeleteProject(useProjectQueryKey());
   const startEdit = (id: number) => startEditProject(id);
   return (
     <Popover
@@ -92,7 +97,9 @@ const More = ({ project }: { project: Project }) => {
           <Typography.Link onClick={() => startEdit(project.id)}>
             编辑
           </Typography.Link>
-          <Typography.Link>删除</Typography.Link>
+          <Typography.Link onClick={() => mutate({ id: project.id })}>
+            删除
+          </Typography.Link>
         </Space>
       }
       placement={"bottom"}

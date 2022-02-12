@@ -1,7 +1,11 @@
 import styled from "@emotion/styled";
 import { Button, Drawer, Form, Input } from "antd";
 import { useProjectModal } from "./utils";
-import { useAddProject, useEditProject } from "../../utils/useProjects";
+import {
+  useAddProject,
+  useEditProject,
+  useProjectQueryKey,
+} from "../../utils/useProjects";
 import { useForm } from "antd/es/form/Form";
 import { UserSelect } from "../../components/user-select";
 import { useEffect } from "react";
@@ -20,7 +24,7 @@ export const ProjectModel = () => {
     mutateAsync,
     isLoading: muteProjectLoading,
     error,
-  } = useMutateProject();
+  } = useMutateProject(useProjectQueryKey());
 
   const onFinish = (values: any) => {
     // 编辑时editingProject有值，新增时没有

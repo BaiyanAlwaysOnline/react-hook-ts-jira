@@ -1,7 +1,13 @@
 import { Project } from "types/projects";
 import { useHttp } from "./useHttp";
 import { cleanObject } from "./utils";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { QueryKey, useMutation, useQuery } from "react-query";
+import { useProjectSearchParams } from "../screen/project-list/utils";
+import {
+  useAddQueryConfig,
+  useDeleteQueryConfig,
+  useEditQueryConfig,
+} from "./useQueryConfig";
 
 // 查询项目列表
 export const useProjects = (param?: Partial<Project>) => {
@@ -13,41 +19,36 @@ export const useProjects = (param?: Partial<Project>) => {
 };
 
 // 编辑项目
-export const useEditProject = () => {
+export const useEditProject = (queryKey: QueryKey) => {
   const request = useHttp();
-  const queryClient = useQueryClient();
-  return useMutation(
-    (params: Partial<Project>) => {
-      return request(`projects/${params.id}`, {
-        method: "PATCH",
-        data: params,
-      });
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries("projects");
-      },
-    }
-  );
+  // queryKey非常重要
+  return useMutation((params: Partial<Project>) => {
+    return request(`projects/${params.id}`, {
+      method: "PATCH",
+      data: params,
+    });
+  }, useEditQueryConfig(queryKey));
 };
 
 // 新增项目
-export const useAddProject = () => {
+export const useAddProject = (queryKey: QueryKey) => {
   const request = useHttp();
-  const queryClient = useQueryClient();
-  return useMutation(
-    (params: Partial<Project>) => {
-      return request(`projects`, {
-        method: "POST",
-        data: params,
-      });
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries("projects");
-      },
-    }
-  );
+  return useMutation((params: Partial<Project>) => {
+    return request(`projects`, {
+      method: "POST",
+      data: params,
+    });
+  }, useAddQueryConfig(queryKey));
+};
+
+// 删除项目
+export const useDeleteProject = (queryKey: QueryKey) => {
+  const request = useHttp();
+  return useMutation(({ id }: { id: Project["id"] }) => {
+    return request(`projects/${id}`, {
+      method: "DELETE",
+    });
+  }, useDeleteQueryConfig(queryKey));
 };
 
 // 查询项目详情
@@ -60,4 +61,9 @@ export const useProject = (projectId?: number) => {
       enabled: !!projectId,
     }
   );
+};
+
+export const useProjectQueryKey = () => {
+  const [params] = useProjectSearchParams();
+  return ["projects", params];
 };

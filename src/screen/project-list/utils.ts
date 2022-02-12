@@ -1,6 +1,10 @@
-import { useUrlQueryParams } from "../../utils/useUrlQueryParams";
+import {
+  useSetUrlParams,
+  useUrlQueryParams,
+} from "../../utils/useUrlQueryParams";
 import { useMemo } from "react";
 import { useProject } from "utils/useProjects";
+import { set } from "husky";
 
 export const useProjectSearchParams = () => {
   // params
@@ -24,11 +28,10 @@ export const useProjectModal = () => {
     "editingProjectId",
   ]);
 
+  const setUrlParams = useSetUrlParams();
+
   const close = () => {
-    setProjectModalOpen({ projectModalOpen: undefined });
-    setTimeout(() => {
-      setEditingProjectId({ editingProjectId: undefined });
-    }, 500);
+    setUrlParams({ projectModalOpen: undefined, editingProjectId: undefined });
   };
   const open = () => setProjectModalOpen({ projectModalOpen: true });
 
