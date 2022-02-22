@@ -33,7 +33,12 @@ export const ProjectModel = () => {
       close();
     });
   };
+  const onCloseModal = () => {
+    form.resetFields();
+    close();
+  };
 
+  console.log(editingProject);
   useEffect(() => {
     form.setFieldsValue(editingProject);
   }, [editingProject, form]);
@@ -43,7 +48,7 @@ export const ProjectModel = () => {
       forceRender={true}
       width={"50vw"}
       visible={projectModalOpen}
-      onClose={close}
+      onClose={onCloseModal}
     >
       <ProjectModelContainer>
         {isLoading ? (

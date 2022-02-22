@@ -4,7 +4,6 @@ import {
 } from "../../utils/useUrlQueryParams";
 import { useMemo } from "react";
 import { useProject } from "utils/useProjects";
-import { set } from "husky";
 
 export const useProjectSearchParams = () => {
   // params

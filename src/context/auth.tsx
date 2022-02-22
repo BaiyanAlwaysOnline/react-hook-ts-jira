@@ -7,6 +7,7 @@ import { useMount } from "utils/hooks";
 import { useAsync } from "utils/useAsync";
 import { FullLoadingPage } from "components/libs";
 import { message } from "antd";
+import { useQueryClient } from "react-query";
 
 interface FormData {
   username: string;
@@ -53,10 +54,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const res = await auth.register(formData);
     setUser(res);
   };
-
+  const queryClient = useQueryClient();
   const logout = () =>
     auth.logout().then(() => {
       setUser(null);
+      queryClient.clear();
     });
 
   useMount(() => {
