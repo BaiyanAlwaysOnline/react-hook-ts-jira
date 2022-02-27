@@ -38,7 +38,6 @@ export const ProjectModel = () => {
     close();
   };
 
-  console.log(editingProject);
   useEffect(() => {
     form.setFieldsValue(editingProject);
   }, [editingProject, form]);

@@ -1,4 +1,3 @@
-import { Project } from "types/projects";
 import { useHttp } from "./useHttp";
 import { cleanObject } from "./utils";
 import { QueryKey, useMutation, useQuery } from "react-query";
@@ -8,6 +7,7 @@ import {
   useDeleteQueryConfig,
   useEditQueryConfig,
 } from "./useQueryConfig";
+import { Project } from "../types/project";
 
 // 查询项目列表
 export const useProjects = (param?: Partial<Project>) => {

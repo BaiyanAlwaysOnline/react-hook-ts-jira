@@ -1,4 +1,3 @@
-import { Project } from "types/projects";
 import { User } from "types/user";
 import dayjs from "dayjs";
 import { TableProps } from "antd/es/table";
@@ -11,6 +10,7 @@ import {
   useProjectQueryKey,
 } from "../../utils/useProjects";
 import { useProjectModal } from "./utils";
+import { Project } from "../../types/project";
 
 interface ListProps extends TableProps<Project> {
   users: User[];

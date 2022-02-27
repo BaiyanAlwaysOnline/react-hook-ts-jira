@@ -1,5 +1,5 @@
 import { QueryKey, useQueryClient } from "react-query";
-import { Project } from "../types/projects";
+import { Project } from "../types/project";
 
 const useQueryConfig = (queryKey: QueryKey, cb: Function) => {
   const queryClient = useQueryClient();
